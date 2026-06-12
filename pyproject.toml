@@ -1,0 +1,89 @@
+[project]
+name = "ragbench"
+version = "0.1.0"
+description = "Statistically rigorous base vs RAG vs QLoRA LLM evaluation on SEC EDGAR + FinQA/TAT-QA"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "torch>=2.4",
+    "transformers>=4.46",
+    "bitsandbytes>=0.44",
+    "accelerate>=0.34",
+    "peft>=0.13",
+    "sentence-transformers>=3.2",
+    "qdrant-client>=1.12",
+    "protobuf>=4.25,<6",
+    "mlflow>=2.17",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "numpy>=1.26",
+    "scipy>=1.14",
+    "datasets>=3.1",
+    "huggingface-hub>=0.26",
+    "sec-edgar-downloader>=5.0",
+    "beautifulsoup4>=4.12",
+    "lxml>=5.3",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "matplotlib>=3.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "pre-commit>=4.0",
+    "types-pyyaml>=6.0",
+    "types-beautifulsoup4>=4.12",
+    "types-tqdm>=4.67",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# PyTorch source: CUDA 12.4 wheels for local dev (RTX 4090).
+# CI overrides this with --extra-index-url https://download.pytorch.org/whl/cpu
+# See DECISIONS.md for install notes.
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu124" }]
+
+[tool.ruff]
+src = ["src"]
+line-length = 100
+target-version = "py311"
+exclude = ["audit.py", ".venv", "venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = ["E501", "B905"]  # B905: zip strict= is style not correctness; slices are already same-length
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["transformers.*", "bitsandbytes.*", "peft.*", "mlflow.*", "scipy.*", "datasets.*", "qdrant_client.*", "sentence_transformers.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short -q"
+markers = [
+    "integration: marks tests that require Docker, GPU, or network (not run in CI)",
+]
+
+[tool.coverage.run]
+source = ["src/ragbench"]
+omit = ["src/ragbench/serving/*", "src/ragbench/finetune/*"]

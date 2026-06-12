@@ -1,0 +1,29 @@
+raw_dir: data/raw/edgar
+manifest_path: data/corpus_manifest.json
+chunk_size: 400      # words per chunk — recorded in DECISIONS.md
+chunk_overlap: 40    # words of overlap between consecutive chunks
+tickers:
+  - AAPL
+  - MSFT
+  - GOOGL
+  - AMZN
+  - META
+  - JPM
+  - BAC
+  - GS
+  - WFC
+  - C
+  - XOM
+  - CVX
+  - JNJ
+  - PFE
+  - UNH
+  - WMT
+  - HD
+years:
+  - 2020
+  - 2021
+  - 2022
+  - 2023
+# Set your email for SEC EDGAR fair-use identification
+edgar_email: "agnivadas1992@gmail.com"

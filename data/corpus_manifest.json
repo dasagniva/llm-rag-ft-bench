@@ -1,0 +1,345 @@
+{
+  "files": [
+    {
+      "path": "sec-edgar-filings/AAPL/10-K/0000320193-20-000096/full-submission.txt",
+      "sha256": "79e20f91eb22d0e6de03159f2a3c4c0ebe5de632121384ccfcf01f463966482d",
+      "size_bytes": "12502600"
+    },
+    {
+      "path": "sec-edgar-filings/AAPL/10-K/0000320193-21-000105/full-submission.txt",
+      "sha256": "fc28841903236990d6f79b9ffab95ebce1f86983221b3128173c1a1d3ecaecd0",
+      "size_bytes": "10502096"
+    },
+    {
+      "path": "sec-edgar-filings/AAPL/10-K/0000320193-22-000108/full-submission.txt",
+      "sha256": "b109cc5fadcd44a709ba28f5d379b83e68a2fec966ad1ab88df6b1fe9e2feab9",
+      "size_bytes": "10332356"
+    },
+    {
+      "path": "sec-edgar-filings/AAPL/10-K/0000320193-23-000106/full-submission.txt",
+      "sha256": "a3bea4a328315b94271d83ef4e183884458a277c317c3d0b4f82ccc6a09c6c76",
+      "size_bytes": "9569569"
+    },
+    {
+      "path": "sec-edgar-filings/AMZN/10-K/0001018724-20-000004/full-submission.txt",
+      "sha256": "61dbbbc7230dea11b3e0ef4297c62a4634e1826c50f4de69863c7113678c856b",
+      "size_bytes": "13336980"
+    },
+    {
+      "path": "sec-edgar-filings/AMZN/10-K/0001018724-21-000004/full-submission.txt",
+      "sha256": "1a3c8b3e364b8c2f19795b9eaadef9c444594fefecbb30f730bf0997a44e8c97",
+      "size_bytes": "12093058"
+    },
+    {
+      "path": "sec-edgar-filings/AMZN/10-K/0001018724-22-000005/full-submission.txt",
+      "sha256": "612030224acfe4412b20d149a2830b106bba80de9d0529754b05e735f6f4ff43",
+      "size_bytes": "13441589"
+    },
+    {
+      "path": "sec-edgar-filings/AMZN/10-K/0001018724-23-000004/full-submission.txt",
+      "sha256": "a62f57b97fdb6c5872e9976ed25fb524e679609b6ae134411f5ecf547da265d6",
+      "size_bytes": "12809287"
+    },
+    {
+      "path": "sec-edgar-filings/BAC/10-K/0000070858-20-000011/full-submission.txt",
+      "sha256": "b51ea4d362f4d14d0fd301b0f41a174a355ae7782f461b5093fc791b8cc5a2e3",
+      "size_bytes": "83575610"
+    },
+    {
+      "path": "sec-edgar-filings/BAC/10-K/0000070858-21-000023/full-submission.txt",
+      "sha256": "cea563a6739d0d3bd3cef26eee80eeeb71765f3a7e14561352a12865951893db",
+      "size_bytes": "68533342"
+    },
+    {
+      "path": "sec-edgar-filings/BAC/10-K/0000070858-22-000062/full-submission.txt",
+      "sha256": "52ab312051f207bee5eaddbe77e665822115e30ce61fa6342bf54ccacd7e9308",
+      "size_bytes": "75121404"
+    },
+    {
+      "path": "sec-edgar-filings/BAC/10-K/0000070858-23-000092/full-submission.txt",
+      "sha256": "81198a91c8ce330bc4454dc33c79214b76d49d06cd8732717430268c2997bf08",
+      "size_bytes": "68460117"
+    },
+    {
+      "path": "sec-edgar-filings/C/10-K/0000831001-20-000031/full-submission.txt",
+      "sha256": "a87e762caa5bab5d195149241cbf4d4a45a9862ac415973096c91ce1d12af1ae",
+      "size_bytes": "87000491"
+    },
+    {
+      "path": "sec-edgar-filings/C/10-K/0000831001-21-000042/full-submission.txt",
+      "sha256": "10eef506dd7d8694db80ee90fd8478e9bf159178502f99229d6379eaca0b9a8b",
+      "size_bytes": "87461064"
+    },
+    {
+      "path": "sec-edgar-filings/C/10-K/0000831001-22-000036/full-submission.txt",
+      "sha256": "66bc0f29a1770e03fc6a3ba0ae2c5d9bd3eb8df04870d7df43bf42bc938e3d2f",
+      "size_bytes": "87290948"
+    },
+    {
+      "path": "sec-edgar-filings/C/10-K/0000831001-23-000037/full-submission.txt",
+      "sha256": "7d50f68d92811b37406b65ff027a0a9af6376f075163fbbdf0f2b77f3f190a08",
+      "size_bytes": "89455198"
+    },
+    {
+      "path": "sec-edgar-filings/CVX/10-K/0000093410-20-000010/full-submission.txt",
+      "sha256": "d0345ebf8a068308fcc1a72001afb14425015782d8450180bce834c221f1d7f6",
+      "size_bytes": "31415187"
+    },
+    {
+      "path": "sec-edgar-filings/CVX/10-K/0000093410-21-000009/full-submission.txt",
+      "sha256": "19f797e33c74c5499489b7ff93cd847b6b8060c6daf3a7b10648ba3d25ce4581",
+      "size_bytes": "29919569"
+    },
+    {
+      "path": "sec-edgar-filings/CVX/10-K/0000093410-22-000019/full-submission.txt",
+      "sha256": "1fca7c382b15536fbf01a2a2bb0712adc2a67a99984fc8ede5c530f809d4d754",
+      "size_bytes": "28652588"
+    },
+    {
+      "path": "sec-edgar-filings/CVX/10-K/0000093410-23-000009/full-submission.txt",
+      "sha256": "b6e0bcaecc606b84c0836a2aa5c9c1726029b17d1cf68052b217f335419ba095",
+      "size_bytes": "27668338"
+    },
+    {
+      "path": "sec-edgar-filings/GOOGL/10-K/0001652044-20-000008/full-submission.txt",
+      "sha256": "fa86c23567fc0a8a1808588722800ad70ea2723ff4afe92da631d041e9148d7d",
+      "size_bytes": "16583126"
+    },
+    {
+      "path": "sec-edgar-filings/GOOGL/10-K/0001652044-21-000010/full-submission.txt",
+      "sha256": "9585d25edca84ef5cbdd7562de1c5789577c8af1eab1454790e8d5fc2aa1f7fc",
+      "size_bytes": "14948616"
+    },
+    {
+      "path": "sec-edgar-filings/GOOGL/10-K/0001652044-22-000019/full-submission.txt",
+      "sha256": "8de1569abffc34ce8150b655cbbbe1f273670a0665c64e84c6384d96c5dfa270",
+      "size_bytes": "15044932"
+    },
+    {
+      "path": "sec-edgar-filings/GOOGL/10-K/0001652044-23-000016/full-submission.txt",
+      "sha256": "5ed954d68eb98aed6b3672ae2cc92206de8a2fbc2e40642a5d0c4e87ccdd4de3",
+      "size_bytes": "15264470"
+    },
+    {
+      "path": "sec-edgar-filings/GS/10-K/0000886982-23-000003/full-submission.txt",
+      "sha256": "62387743b48f6d3a01cc39c306373bb7ea60e2a7eb7194bdf66974ae45935bf4",
+      "size_bytes": "56003279"
+    },
+    {
+      "path": "sec-edgar-filings/GS/10-K/0001193125-20-043853/full-submission.txt",
+      "sha256": "db8f175a3a4d8acede784e97c80329da9e48feb43f61f228e3864cb35d3f0c87",
+      "size_bytes": "62675184"
+    },
+    {
+      "path": "sec-edgar-filings/GS/10-K/0001193125-21-049380/full-submission.txt",
+      "sha256": "2e4dd8db817e6570f9a3091e876a6bf2b69392bfa4238b1b94a03ee04735f2c8",
+      "size_bytes": "57537765"
+    },
+    {
+      "path": "sec-edgar-filings/GS/10-K/0001193125-22-052682/full-submission.txt",
+      "sha256": "92f2c16fd338567c95c32bfa0b646db718f1f6581cc9fb7bd1c4e77e238e2923",
+      "size_bytes": "53909978"
+    },
+    {
+      "path": "sec-edgar-filings/HD/10-K/0000354950-20-000015/full-submission.txt",
+      "sha256": "4e35f59aa46c98b7bb3871331ab94e296eb88217f205bbc7d4decff9868a8ff6",
+      "size_bytes": "14405304"
+    },
+    {
+      "path": "sec-edgar-filings/HD/10-K/0000354950-21-000089/full-submission.txt",
+      "sha256": "931678e03e0204574ff3d6401a6954aa9b6c74d36e9c718362bedf135ec5785c",
+      "size_bytes": "14449905"
+    },
+    {
+      "path": "sec-edgar-filings/HD/10-K/0000354950-22-000070/full-submission.txt",
+      "sha256": "f8c37793bc63d6650edcb7da2d00ff5d1317cc890633e9224dbab206c560d564",
+      "size_bytes": "18926032"
+    },
+    {
+      "path": "sec-edgar-filings/HD/10-K/0000354950-23-000059/full-submission.txt",
+      "sha256": "def05a07d19729891c7ef638ae80d6f7fc3a38b3b63daa52180a1e3a0cb44b31",
+      "size_bytes": "18499837"
+    },
+    {
+      "path": "sec-edgar-filings/JNJ/10-K/0000200406-20-000010/full-submission.txt",
+      "sha256": "f36fefdeed7dcad43ffaf9485527c418eb159bb1c0ed7da97cf441bc28957adc",
+      "size_bytes": "30955573"
+    },
+    {
+      "path": "sec-edgar-filings/JNJ/10-K/0000200406-21-000008/full-submission.txt",
+      "sha256": "d7f675bf122c5acf69519d9a318dac72003553fc484dab2d096a370691c4b761",
+      "size_bytes": "25521070"
+    },
+    {
+      "path": "sec-edgar-filings/JNJ/10-K/0000200406-22-000022/full-submission.txt",
+      "sha256": "24656ba26cf33185797effe8b6128875a22fb340ed2c5680c6f868a0c2e2e767",
+      "size_bytes": "25022269"
+    },
+    {
+      "path": "sec-edgar-filings/JNJ/10-K/0000200406-23-000016/full-submission.txt",
+      "sha256": "bd80f80c56eab3978ab4b466b120d494c5140decd741e556e813376efaa79962",
+      "size_bytes": "24820081"
+    },
+    {
+      "path": "sec-edgar-filings/JPM/10-K/0000019617-20-000257/full-submission.txt",
+      "sha256": "f17e0375c0ccee5e1cb53c41cc4dcd84a66a0cd37b73849741979cfdd6e848b7",
+      "size_bytes": "88295885"
+    },
+    {
+      "path": "sec-edgar-filings/JPM/10-K/0000019617-21-000236/full-submission.txt",
+      "sha256": "5a25418e788075368b5bb67a401ac9e27959cd3f08f61e9dfd738a5d4571df0f",
+      "size_bytes": "70795855"
+    },
+    {
+      "path": "sec-edgar-filings/JPM/10-K/0000019617-22-000272/full-submission.txt",
+      "sha256": "402bce1adbb6e48deae892002eab35963126a94b37cd29433047635e5b190aee",
+      "size_bytes": "69493804"
+    },
+    {
+      "path": "sec-edgar-filings/JPM/10-K/0000019617-23-000231/full-submission.txt",
+      "sha256": "fea9a4eae3e339c79badecea9746fe44ea113dcb69d13dbc31c68a403c2e1a83",
+      "size_bytes": "72224070"
+    },
+    {
+      "path": "sec-edgar-filings/META/10-K/0001326801-20-000013/full-submission.txt",
+      "sha256": "f8ff2c7f5c7339125c78625de91e2b676be198fb316eefd71f85bd7017025cd9",
+      "size_bytes": "12866813"
+    },
+    {
+      "path": "sec-edgar-filings/META/10-K/0001326801-21-000014/full-submission.txt",
+      "sha256": "457d48975eaba1c9cf78cb1ba08a6e95fdd45e90bf7515d226dd20928042b7f1",
+      "size_bytes": "13079113"
+    },
+    {
+      "path": "sec-edgar-filings/META/10-K/0001326801-22-000018/full-submission.txt",
+      "sha256": "24d56e87f1dd499b7f95a60874df85a695493e7f46586af983f4f640fe2202a7",
+      "size_bytes": "18009685"
+    },
+    {
+      "path": "sec-edgar-filings/META/10-K/0001326801-23-000013/full-submission.txt",
+      "sha256": "24848663b32b5a1b2647623aa7122d79b0eb8108ad7fa71a5c951f13c07a5f92",
+      "size_bytes": "15340871"
+    },
+    {
+      "path": "sec-edgar-filings/MSFT/10-K/0000950170-23-035122/full-submission.txt",
+      "sha256": "25643504869832e040eb3c2716af7609dd7289854381fa847be2eeebe4c9f5b2",
+      "size_bytes": "40966463"
+    },
+    {
+      "path": "sec-edgar-filings/MSFT/10-K/0001564590-20-034944/full-submission.txt",
+      "sha256": "9d3d278dd79802fe2a2cc8d38b883de9f57a534bb7de4fb88d62933d14b2318f",
+      "size_bytes": "27648382"
+    },
+    {
+      "path": "sec-edgar-filings/MSFT/10-K/0001564590-21-039151/full-submission.txt",
+      "sha256": "5dd507e073126e733443b7065ef7ce9eaa82095ad20631f040e1b4ee7547edf0",
+      "size_bytes": "26907098"
+    },
+    {
+      "path": "sec-edgar-filings/MSFT/10-K/0001564590-22-026876/full-submission.txt",
+      "sha256": "6c37d5fa9a3ebbe0188c5f0f0f37e6c1cfe713d704f035c557ccb18cd14ea93f",
+      "size_bytes": "26423137"
+    },
+    {
+      "path": "sec-edgar-filings/PFE/10-K/0000078003-20-000014/full-submission.txt",
+      "sha256": "e5c707d1e8a2fd1f4d3d9061cdbaf8906b1ec0fb8917d4ab8c86664c2ad4ae0f",
+      "size_bytes": "49419562"
+    },
+    {
+      "path": "sec-edgar-filings/PFE/10-K/0000078003-21-000038/full-submission.txt",
+      "sha256": "d3578e8028ce8618cba69adb3e9d1dcaab6c45af263f128d163aec361951fb0a",
+      "size_bytes": "36234122"
+    },
+    {
+      "path": "sec-edgar-filings/PFE/10-K/0000078003-22-000027/full-submission.txt",
+      "sha256": "a49f0cb9eef53fe2690c914ab80274dfe181ead1b06990afdda2e80bf1001600",
+      "size_bytes": "35732235"
+    },
+    {
+      "path": "sec-edgar-filings/PFE/10-K/0000078003-23-000024/full-submission.txt",
+      "sha256": "7e3bee582d240abfe9e533474e9f5f8453108bd2eccfb64e867aec45fa83dce2",
+      "size_bytes": "34541798"
+    },
+    {
+      "path": "sec-edgar-filings/UNH/10-K/0000731766-20-000006/full-submission.txt",
+      "sha256": "171573789c162e64ac89220bf7e5c200ee30567f5f5968d4780c337250c220db",
+      "size_bytes": "20757910"
+    },
+    {
+      "path": "sec-edgar-filings/UNH/10-K/0000731766-21-000013/full-submission.txt",
+      "sha256": "56645d1f8237dc11a00d91a5b098e374168b4b3035d37918a6f9e0198960ea23",
+      "size_bytes": "18656896"
+    },
+    {
+      "path": "sec-edgar-filings/UNH/10-K/0000731766-22-000008/full-submission.txt",
+      "sha256": "676b2e96be5cf6b7fa63969a754711b53de08cfcdca1a9ef29c7049b63e22fb9",
+      "size_bytes": "20213828"
+    },
+    {
+      "path": "sec-edgar-filings/UNH/10-K/0000731766-23-000008/full-submission.txt",
+      "sha256": "3f61260a57279bdc7c9e643c53c839872a5f5faa94105bb99ddc4049c0382576",
+      "size_bytes": "20234001"
+    },
+    {
+      "path": "sec-edgar-filings/WFC/10-K/0000072971-20-000217/full-submission.txt",
+      "sha256": "1925dca083baeb48c431695d6676ee5365009194cf1cb8da92bb7aa26c084168",
+      "size_bytes": "102513254"
+    },
+    {
+      "path": "sec-edgar-filings/WFC/10-K/0000072971-21-000197/full-submission.txt",
+      "sha256": "7bffb0545753e4c08f2e1227a41a2d1aa3942ca833636ecb3bd7e212d3ac1756",
+      "size_bytes": "80062313"
+    },
+    {
+      "path": "sec-edgar-filings/WFC/10-K/0000072971-22-000096/full-submission.txt",
+      "sha256": "f2989aa3afde06047a790c40c8029468789f8b44c00e8fa5a85767d29414de44",
+      "size_bytes": "76161426"
+    },
+    {
+      "path": "sec-edgar-filings/WFC/10-K/0000072971-23-000071/full-submission.txt",
+      "sha256": "12b83aefd3f480732a253f6e893351d41597418a3aeae4d2b8ed0cdd65496395",
+      "size_bytes": "68392449"
+    },
+    {
+      "path": "sec-edgar-filings/WMT/10-K/0000104169-20-000011/full-submission.txt",
+      "sha256": "ecf8dc358190b6c9a3b6c51f9a339e27a0571d5c5e9d2a6205b9baf0b81fffa9",
+      "size_bytes": "16039683"
+    },
+    {
+      "path": "sec-edgar-filings/WMT/10-K/0000104169-21-000033/full-submission.txt",
+      "sha256": "7687bd6fe2d9d391132620984d847be1e2076d1b7f7522b46615a2ad34cb5f0c",
+      "size_bytes": "13328967"
+    },
+    {
+      "path": "sec-edgar-filings/WMT/10-K/0000104169-22-000012/full-submission.txt",
+      "sha256": "1459ceb57273562a478f429be864c0ece811dfa337511254068438617e681ff4",
+      "size_bytes": "14199149"
+    },
+    {
+      "path": "sec-edgar-filings/WMT/10-K/0000104169-23-000020/full-submission.txt",
+      "sha256": "c45aba1aa16ea61edb81d265a27cf0e5c37ff36b6d7affc15c158c51a731347e",
+      "size_bytes": "13431083"
+    },
+    {
+      "path": "sec-edgar-filings/XOM/10-K/0000034088-20-000016/full-submission.txt",
+      "sha256": "72ee7adbe5bb26729c1c0c2dba646385930916b8714650c62904d179d20e3640",
+      "size_bytes": "31993281"
+    },
+    {
+      "path": "sec-edgar-filings/XOM/10-K/0000034088-21-000012/full-submission.txt",
+      "sha256": "74398ab9a7a7bfea2665f677a6b49e79dfd5bd65d46d336fb7186e792ad4c9dc",
+      "size_bytes": "21572229"
+    },
+    {
+      "path": "sec-edgar-filings/XOM/10-K/0000034088-22-000011/full-submission.txt",
+      "sha256": "62cdd081883e262e78f79efd2e6ed7a052cf33bd7f3e8e786c4e216ae24ca446",
+      "size_bytes": "23981301"
+    },
+    {
+      "path": "sec-edgar-filings/XOM/10-K/0000034088-23-000020/full-submission.txt",
+      "sha256": "fa06b8e300dca2ba6f7f2d54db190ff2c73fe153179253151963eeed9344b1be",
+      "size_bytes": "27495176"
+    }
+  ],
+  "count": 68
+}

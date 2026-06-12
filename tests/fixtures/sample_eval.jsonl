@@ -1,0 +1,5 @@
+{"id": "finqa_test_001", "question": "What was the net income in 2022?", "reference_answer": "15 million", "source_dataset": "finqa", "answer_type": "numeric"}
+{"id": "finqa_test_002", "question": "Did revenue increase from 2021 to 2022?", "reference_answer": "yes", "source_dataset": "finqa", "answer_type": "text"}
+{"id": "tatqa_test_001", "question": "What is the total assets amount?", "reference_answer": "500", "source_dataset": "tatqa", "answer_type": "numeric"}
+{"id": "tatqa_test_002", "question": "What percentage of revenue was operating income?", "reference_answer": "12%", "source_dataset": "tatqa", "answer_type": "numeric"}
+{"id": "finqa_test_003", "question": "What were total liabilities?", "reference_answer": "200 million", "source_dataset": "finqa", "answer_type": "numeric"}
