@@ -1,0 +1,18 @@
+config_name: base
+
+model:
+  name: Qwen/Qwen3-8B
+  load_in_4bit: true
+  seed: 42
+  max_new_tokens: 128
+  use_context: false
+
+system_prompt: >-
+  You are a financial analyst. Answer the question concisely and precisely.
+  If the answer is a number, provide only the number with its unit.
+
+eval:
+  eval_set_path: data/eval_manifest.jsonl
+  output_dir: reports
+  mlflow_experiment: ragbench
+  mlflow_run_name: base

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "finqa_AMT/2005/page_102.pdf-3",
+    "question": "what is the percentage change in impairment charges and net losses from 2003 to 2004?",
+    "reference_answer": "-7.3%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_KHC/2018/page_132.pdf-1",
+    "question": "how many shares were issued during the period of 2016 to 2018 , in millions?",
+    "reference_answer": "10",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_SLG/2011/page_91.pdf-2",
+    "question": "what was the percent of the change in the compensation expense in connection with connection with the 2005 outperformance plan.during from 2009 to 2010",
+    "reference_answer": "30.4%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "tatqa_25b47723-4c5c-462d-94f6-07c0719372b6",
+    "question": "What was the balance of total gross unrecognized tax benefits at the end of period in 2018?",
+    "reference_answer": "$13,162 thousand",
+    "source_dataset": "tatqa",
+    "answer_type": "span"
+  },
+  {
+    "id": "finqa_WRK/2018/page_107.pdf-5",
+    "question": "what was the percentage change in the balance at end of fiscal year for the gross unrecognized tax benefits",
+    "reference_answer": "-14.6%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_IP/2006/page_35.pdf-4",
+    "question": "what was the difference in the increase in the cash in working capital in 2006 compared with the increase in 2005 in millions",
+    "reference_answer": "-204",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_ECL/2016/page_52.pdf-3",
+    "question": "what portion of the total contractual obligations is due in the next 12 months?",
+    "reference_answer": "9.2%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "tatqa_9696e1f9-a7de-485b-b34d-727577fc5e0f",
+    "question": "What types of accounts receivable are there?",
+    "reference_answer": "Billed Unbilled",
+    "source_dataset": "tatqa",
+    "answer_type": "multi-span"
+  },
+  {
+    "id": "finqa_PPG/2006/page_42.pdf-1",
+    "question": "what would the cash expense for product warranties be in 2007 if the amounts increased the same percentage as in 2006 ( in millions ) ?",
+    "reference_answer": "6.25",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_GIS/2017/page_31.pdf-3",
+    "question": "what are the total off-balance sheet obligations , ( in millions ) ?",
+    "reference_answer": "670",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_CMCSA/2015/page_67.pdf-2",
+    "question": "what was the percentage cable distribution systems capital expenditures of the capital expenditures incurred in cable communications segment capital expenditures in 2014?",
+    "reference_answer": "33%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_AES/2010/page_227.pdf-1",
+    "question": "what percentage of recourse debt as of december 31 , 2010 matures after 2015?",
+    "reference_answer": "68%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "tatqa_c719f476-2e7d-4ce9-bae1-7fe582aca5d4",
+    "question": "What was the depreciation expense in 2019, 2018 and 2017 respectively?",
+    "reference_answer": "27.2 million $22.5 million $22.0 million",
+    "source_dataset": "tatqa",
+    "answer_type": "multi-span"
+  },
+  {
+    "id": "finqa_AMT/2012/page_50.pdf-1",
+    "question": "for the quarter december 31 , 2012 what was the percent of the total number of shares purchased in december",
+    "reference_answer": "16.5%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "finqa_ABMD/2006/page_43.pdf-3",
+    "question": "what percentage of total obligations are operating lease obligations in 2008?",
+    "reference_answer": "87%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "tatqa_37bb138e-95ca-477e-9274-401931ea966d",
+    "question": "What is the amount of vacation and other compensation in 2019 and 2018 respectively?",
+    "reference_answer": "$1,659 $1,433 thousand",
+    "source_dataset": "tatqa",
+    "answer_type": "multi-span"
+  },
+  {
+    "id": "tatqa_446acbfa-24f4-4d12-9d96-2a74ea3896a7",
+    "question": "How much was the actual and constant percentage change in interest expense?",
+    "reference_answer": "3% 3%",
+    "source_dataset": "tatqa",
+    "answer_type": "multi-span"
+  },
+  {
+    "id": "finqa_GS/2013/page_149.pdf-2",
+    "question": "what was the percentage change in collateral posted from 2012 to 2013?",
+    "reference_answer": "-25%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  },
+  {
+    "id": "tatqa_161c5ecf-1d8d-45aa-bc75-ea5de0d06af8",
+    "question": "In which year is the gross profit from continuing operations higher?",
+    "reference_answer": "2019",
+    "source_dataset": "tatqa",
+    "answer_type": "span"
+  },
+  {
+    "id": "finqa_CME/2017/page_40.pdf-1",
+    "question": "what is the anualized return for cme group from 2012 to 2017?",
+    "reference_answer": "22%",
+    "source_dataset": "finqa",
+    "answer_type": "numeric"
+  }
+]

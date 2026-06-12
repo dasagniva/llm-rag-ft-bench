@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# uv
+.uv/
+
+# Data — raw corpora and model weights must never be committed
+data/raw/
+data/index/
+*.bin
+*.safetensors
+*.gguf
+models/
+
+# MLflow artifacts (local tracking)
+mlruns/
+mlartifacts/
+
+# Environment
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# MLflow local tracking db
+mlflow.db
+
+# Local Claude Code settings (machine-specific)
+.claude/
+htmlcov/
+*.cover
+
+# Reports are committed only after real eval runs
+# (remove entries below once Phase 3 is complete and results are real)
+# reports/*.png
+# reports/*.md
+
+# Zone identifiers from Windows copy
+*.Identifier
+
+# Ad-hoc scripts created during development
+audit.py

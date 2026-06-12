@@ -1,0 +1,13 @@
+# Eval set construction parameters (frozen after Phase 1 audit sign-off)
+eval_set_path: data/eval_manifest.jsonl
+output_dir: reports
+mlflow_experiment: ragbench
+
+# Sampling
+sample_seed: 0
+target_n: 300          # minimum 200; flag to user if sources force fewer
+finqa_split: test
+# TAT-QA test set withholds answers (competition format); dev set used instead
+tatqa_split: dev
+finqa_sample_n: 180    # ~60% of target from FinQA
+tatqa_sample_n: 120    # ~40% of target from TAT-QA
