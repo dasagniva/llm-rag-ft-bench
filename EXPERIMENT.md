@@ -181,3 +181,23 @@ results were inspected before this change was specified (Task 1 of
 `pre-phase4-fixes-prompt.md`); the existing base-run predictions were re-scored
 under both the old and new logic and the difference reported before this amendment
 was written.
+
+### 2026-06-12 — Retrieval corpus: FinQA test + TAT-QA dev source documents
+
+**Change:** §3's retrieval corpus is amended from "SEC EDGAR 10-K annual filings"
+to: the source documents of the FinQA test split and TAT-QA dev split (the same
+splits the eval set in §4 is sampled from) — 658 unique source pages/tables,
+chunked into 1,221 chunks (`chunk_size=400`, `overlap=40`, same chunker as before),
+indexed into a new Qdrant collection `ragbench_finqa_tatqa`. The original
+EDGAR-derived `ragbench` collection (278K chunks) is retained as a separate
+large-scale ingestion demo (see `DECISIONS.md`) but is no longer used by `rag`/`ft_rag`
+configs.
+
+**Justification:** The eval questions (§4) are written against FinQA/TAT-QA source
+pages, which are not SEC EDGAR 10-K filings and were never in the EDGAR retrieval
+corpus — so RAG configs could not retrieve the gold-supporting passage by
+construction, regardless of retriever quality. A gold-span-present retrieval
+diagnostic on the new corpus measures hit-rate@5 = 0.5100 (153/300) over the frozen
+eval set (`reports/retrieval_diagnostics.md`). This is a corpus-construction fix
+addressing a corpus/eval-set mismatch; the eval set itself (§4), seeds, decoding,
+and pre-registered contrasts (§7) are unchanged.

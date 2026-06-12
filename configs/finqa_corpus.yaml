@@ -1,0 +1,18 @@
+# Retrieval corpus for the base-vs-RAG evaluation (EXPERIMENT.md amendment 2026-06-12).
+#
+# Built from the FinQA test split + TAT-QA dev split — the exact source documents
+# (10-K page text + table) each eval question was written against — so retrieved
+# context can contain the answer. Replaces the generic EDGAR S&P500 sample for the
+# headline RAG comparison; the EDGAR ingestion pipeline remains in the repo as a
+# separate large-scale ingestion demo (see DECISIONS.md).
+
+chunk_size: 400      # words per chunk — same convention as configs/corpus.yaml
+chunk_overlap: 40    # words of overlap between consecutive chunks
+
+output_chunks_path: data/raw/finqa_chunks.jsonl
+output_gold_spans_path: data/raw/finqa_gold_spans.jsonl
+
+# Source URLs — must match scripts/build_eval_set.py (same splits the frozen
+# eval_manifest.jsonl was sampled from).
+finqa_test_url: https://raw.githubusercontent.com/czyssrs/FinQA/main/dataset/test.json
+tatqa_dev_url: https://raw.githubusercontent.com/NExTplusplus/TAT-QA/master/dataset_raw/tatqa_dataset_dev.json

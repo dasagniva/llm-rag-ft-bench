@@ -76,4 +76,40 @@ check. Year-like values (integers in [1900, 2100]) require exact equality regard
 tolerance, since e.g. 2021 vs 2019 falls within 1e-3 relative tolerance and would
 otherwise spuriously match. See `EXPERIMENT.md` §10 amendment (2026-06-12).
 
+### Task 2 — benchmark-aligned retrieval corpus
+
+**Retrieval corpus choice (Option A — FinQA test + TAT-QA dev source documents):**
+Chosen over Option B (distractor expansion to ~3,158 docs / 4,677 chunks by mixing
+in unrelated EDGAR filings as hard negatives). Option A builds the smallest corpus
+that guarantees the gold-supporting page/table for every eval question is indexable
+(658 docs → 1,221 chunks via the existing `chunk_documents`, `chunk_size=400`,
+`overlap=40`). Option B is recorded as a possible future robustness check (does
+retrieval quality degrade with realistic distractor density?) but is out of scope
+for the immediate corpus/eval-set mismatch fix. See `EXPERIMENT.md` §10 amendment
+(2026-06-12) for the pre-registration-compliant framing.
+
+**EDGAR `ragbench` collection retained as ingestion demo, not part of the eval
+pipeline:** The 278K-chunk EDGAR collection built in Phase 2 cannot contain the
+gold-supporting passages for the FinQA/TAT-QA eval set (different source documents
+entirely), so it cannot be used for the base-vs-RAG comparison. Rather than delete
+278K indexed chunks / discard the EDGAR ingestion pipeline work, it is kept in
+Qdrant and referenced in the repo as a demonstration of large-scale corpus
+ingestion (chunking, embedding, indexing at EDGAR scale), separate from the
+FinQA/TAT-QA-grounded `ragbench_finqa_tatqa` collection used by `configs/rag.yaml`.
+
+**Gold-span-present retrieval diagnostic methodology:** For each eval question,
+`scripts/build_finqa_corpus.py` records `gold_span_parts` — the exact
+gold-supporting text sentences (`finqa_gold_span_parts`, via FinQA's
+`qa.ann_text_rows`/`ann_table_rows`) or paragraph/table strings
+(`tatqa_gold_span_parts`, via TAT-QA's `rel_paragraphs`/`answer_from`) — per
+question ID. `gold_span_present` (in `ragbench/corpus/finqa_tatqa.py`) checks
+whether every gold span part is a whitespace-normalized substring of the
+concatenation of the top-k retrieved chunk texts. This is strictly stronger than
+"gold-doc-present" (right document retrieved) — it requires the specific
+row/sentence the answer depends on to be present. `scripts/retrieval_diagnostics.py`
+computes hit-rate@{1,3,5} over the full frozen eval set (n=300) and logs to MLflow;
+`tests/integration/test_finqa_retrieval.py` asserts hit-rate@5 ≥ 0.30 on a 30-question
+seeded sample against the live `ragbench_finqa_tatqa` collection as a regression
+floor (well below the measured 0.5100 to avoid sample-noise flakiness).
+
 **2026-06-12 — Qwen3 thinking mode:** `apply_chat_template(..., enable_thinking=False)` disables Qwen3's chain-of-thought reasoning for deterministic, fast inference in the eval configs. This kwarg raises `TypeError` on other models; `generation/base.py` catches this and retries without it.
