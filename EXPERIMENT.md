@@ -163,4 +163,21 @@ Primary metric remains Token F1; Exact Match retained as secondary endpoint.
 *(Any change after Phase 3 acceptance must be recorded here with date and justification.
 No results may have been seen before an amendment is proposed.)*
 
-*(none)*
+### 2026-06-12 — Numeric exact-match extraction/normalization
+
+**Change:** `eval/metrics.py::exact_match` now tries a numeric-aware comparison
+(`eval/normalize.py::numeric_exact_match`) before falling back to normalized string
+equality. It extracts the last number in the prediction (handling currency symbols,
+thousands separators, spelled-out numbers, percent signs, and scale words such as
+"million"/"billion") and compares it to the reference under a relative tolerance
+(default 1e-3), with an exact-equality requirement when both values look like years
+(integers in [1900, 2100]) to avoid spurious matches (e.g. 2021 vs 2019).
+
+**Justification:** Without this, EM scoring penalized correct numeric answers that
+differed only in formatting (e.g. "$5,735 million" vs "5735"), conflating a scoring
+artifact with the model's actual ability to answer. This is a scoring-pipeline fix,
+not a change to the eval set, seeds, decoding, or pre-registered contrasts. No
+results were inspected before this change was specified (Task 1 of
+`pre-phase4-fixes-prompt.md`); the existing base-run predictions were re-scored
+under both the old and new logic and the difference reported before this amendment
+was written.
