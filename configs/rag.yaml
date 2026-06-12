@@ -1,0 +1,28 @@
+config_name: rag
+
+model:
+  name: Qwen/Qwen3-8B
+  load_in_4bit: true
+  seed: 42
+  max_new_tokens: 128
+  use_context: true   # RAG injects retrieved chunks
+
+system_prompt: >-
+  You are a financial analyst. Use the provided context to answer the question
+  concisely and precisely. If the answer is a number, provide only the number
+  with its unit. If the context does not contain the answer, say so briefly.
+
+retrieval:
+  embedding_model: BAAI/bge-base-en-v1.5
+  qdrant_url: http://localhost:6333
+  # FinQA test + TAT-QA dev source documents (EXPERIMENT.md amendment 2026-06-12).
+  # The original EDGAR-derived "ragbench" collection (278K chunks) remains in
+  # Qdrant as a separate large-scale ingestion demo — see DECISIONS.md.
+  collection: ragbench_finqa_tatqa
+  top_k: 5
+
+eval:
+  eval_set_path: data/eval_manifest.jsonl
+  output_dir: reports
+  mlflow_experiment: ragbench
+  mlflow_run_name: rag
