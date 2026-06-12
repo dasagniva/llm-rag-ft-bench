@@ -62,4 +62,18 @@ Entries are dated; newest first within each section.
 
 **2026-06-12 — uv cache corruption:** After manually running `uv pip uninstall/install`, the uv cache produced mixed-version hard-link installs for numpy and coverage. Resolution: `uv cache clean` then `uv sync`. Do NOT use `uv pip install/uninstall` on individual packages in this project — always use `uv sync`.
 
+## Pre-Phase-4 fixes — 2026-06-12
+
+### Task 1 — numeric answer extraction and tolerance-based EM
+
+**Numeric exact-match scoring (`eval/normalize.py`):** Exact match previously required
+normalized-string equality, which penalized correct numeric answers that differed only
+in formatting (currency symbols, thousands separators, spelled-out numbers, scale words
+like "million"/"billion", percent signs). `eval/metrics.py::exact_match` now tries
+`numeric_exact_match` first (relative tolerance 1e-3, applied only when the reference is
+itself a bare number via `is_numeric_string`), falling back to the prior string-equality
+check. Year-like values (integers in [1900, 2100]) require exact equality regardless of
+tolerance, since e.g. 2021 vs 2019 falls within 1e-3 relative tolerance and would
+otherwise spuriously match. See `EXPERIMENT.md` §10 amendment (2026-06-12).
+
 **2026-06-12 — Qwen3 thinking mode:** `apply_chat_template(..., enable_thinking=False)` disables Qwen3's chain-of-thought reasoning for deterministic, fast inference in the eval configs. This kwarg raises `TypeError` on other models; `generation/base.py` catches this and retries without it.
