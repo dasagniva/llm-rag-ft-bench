@@ -130,3 +130,31 @@ EM Δ=+0.1033 [+0.0700, +0.1400] (McNemar exact, p_adj<0.0001), F1 Δ=+0.1650
 The eval set, decoding, seeds, and pre-registered contrasts (`EXPERIMENT.md` §§4, 6, 7)
 are unchanged; no new amendment needed for this task (the scoring/corpus changes were
 already recorded as dated amendments under Tasks 1/2).
+
+### Task 5 — decision gate: proceed to Phase 4?
+
+**Summary (from Task 3 re-baseline, `reports/base_vs_rag.md`):**
+
+| Metric | `base` | `rag` | Δ (rag − base) | Test | p_adj |
+|---|---|---|---|---|---|
+| Exact Match | 0.0067 [0.0000, 0.0167] | 0.1100 [0.0767, 0.1467] | +0.1033 [+0.0700, +0.1400] | McNemar exact | <0.0001 |
+| Token F1 | 0.0387 [0.0265, 0.0523] | 0.2037 [0.1649, 0.2433] | +0.1650 [+0.1276, +0.2040] | Permutation | <0.0001 |
+| Faithfulness (RAG only) | — | 0.5181 [0.4728, 0.5636] | — | — | — |
+
+**Is `base` off the performance floor?** No — in absolute terms `base` is still
+near-zero (EM≈0.7%, F1≈3.9%). This is now an *explained* floor, not a broken one: the
+same model/scoring/eval set reaches EM=11%/F1=20% once retrieval gives it access to the
+source tables, so `base`'s low score reflects a genuine inability to answer
+table-grounded questions without context, not a measurement artifact.
+
+**Is the base-vs-RAG difference significant?** Yes, on both pre-registered metrics,
+with a large effect size and adequate power (31 discordant EM pairs, all in `rag`'s
+favour, 0 the reverse).
+
+**Recommendation:** proceed to Phase 4 (QLoRA). The experiment is non-degenerate and
+well-powered, giving a meaningful baseline against which to test whether fine-tuning
+closes part of `base`'s gap to `rag` and/or compounds with `rag` (contrasts C2–C5).
+
+**Decision:** pending — awaiting user's go/no-go on Phase 4. If proceeding, Phase 4
+still requires `[HUMAN]` confirmation of hardware/spend per `CLAUDE.md` operating
+rule 5 before any GPU fine-tuning work starts.
