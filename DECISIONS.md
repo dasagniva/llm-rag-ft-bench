@@ -113,3 +113,20 @@ seeded sample against the live `ragbench_finqa_tatqa` collection as a regression
 floor (well below the measured 0.5100 to avoid sample-noise flakiness).
 
 **2026-06-12 — Qwen3 thinking mode:** `apply_chat_template(..., enable_thinking=False)` disables Qwen3's chain-of-thought reasoning for deterministic, fast inference in the eval configs. This kwarg raises `TypeError` on other models; `generation/base.py` catches this and retries without it.
+
+### Task 3 — re-baseline (base vs rag), post Task 1/2 fixes
+
+**Re-run completed.** Same frozen eval set (N=300), same decoding/seeds (temperature 0,
+`max_new_tokens=128`, seed=42) as the original Phase 3 run, but with the corrected
+numeric EM scoring (Task 1) and the `ragbench_finqa_tatqa` retrieval corpus (Task 2).
+
+Results: `base` EM=0.0067, F1=0.0387 (unchanged from the pre-fix run — base has no
+access to the table values regardless of scoring, so this is the expected floor, not a
+bug); `rag` EM=0.1100, F1=0.2037, Faithfulness=0.5181. Pairwise `rag − base`:
+EM Δ=+0.1033 [+0.0700, +0.1400] (McNemar exact, p_adj<0.0001), F1 Δ=+0.1650
+[+0.1276, +0.2040] (permutation, p_adj<0.0001) — both significant at α=0.05. Artifacts:
+`reports/base_results.jsonl`, `reports/rag_results.jsonl`, `reports/base_vs_rag.md`,
+`reports/base_vs_rag_forest.png`, MLflow experiment `ragbench` (runs `base`, `rag`).
+The eval set, decoding, seeds, and pre-registered contrasts (`EXPERIMENT.md` §§4, 6, 7)
+are unchanged; no new amendment needed for this task (the scoring/corpus changes were
+already recorded as dated amendments under Tasks 1/2).

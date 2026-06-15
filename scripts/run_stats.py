@@ -110,6 +110,25 @@ def main() -> None:
         alpha=0.05,
     )
 
+    # Faithfulness is RAG-only (no `base` analogue) — analysed separately as a
+    # single-configuration bootstrap CI, not a pairwise contrast.
+    faith_scores = np.array([float(r["faithfulness"]) for r in rag_rows])
+    faith_result = analyse(
+        {"rag": {"faithfulness": faith_scores}},
+        contrasts=[],
+        metrics=["faithfulness"],
+        b=10_000,
+        seed=42,
+        alpha=0.05,
+    )
+    faith = faith_result.bootstrap[0]
+
+    # McNemar discordant-pair breakdown (EM), for the power note in the report.
+    em_base, em_rag = data["base"]["exact_match"], data["rag"]["exact_match"]
+    rag_only = int(np.sum((em_base == 0) & (em_rag == 1)))
+    base_only = int(np.sum((em_base == 1) & (em_rag == 0)))
+    discordant = rag_only + base_only
+
     # Print summary
     print("\n" + "=" * 65)
     print("  BASE vs RAG — Statistical Summary")
@@ -126,6 +145,11 @@ def main() -> None:
     logger.info("Writing forest plot → %s", fig_path)
     forest_plot(result, config_a="base", config_b="rag", out_path=fig_path)
 
+    em = next(pw for pw in result.pairwise if pw.metric == "exact_match")
+    f1 = next(pw for pw in result.pairwise if pw.metric == "token_f1")
+    base_em = next(b for b in result.bootstrap if b.config == "base" and b.metric == "exact_match")
+    base_f1 = next(b for b in result.bootstrap if b.config == "base" and b.metric == "token_f1")
+
     # Write markdown report
     report_path = Path("reports/base_vs_rag.md")
     logger.info("Writing report → %s", report_path)
@@ -136,16 +160,40 @@ def main() -> None:
         out_path=report_path,
         figure_path=fig_path,
         extra_context=(
+            "## RAG-only diagnostics\n\n"
+            "| Metric | Point est. | 95% CI | n |\n"
+            "|---|---|---|---|\n"
+            f"| Faithfulness | {faith.point_estimate:.4f} "
+            f"| [{faith.ci_lower:.4f}, {faith.ci_upper:.4f}] | {faith.n} |\n\n"
+            "Faithfulness (fraction of answer content traceable to retrieved context, "
+            "0-1 scale) is **moderate, not high**: roughly half of RAG answer content "
+            "is grounded in the retrieved chunks, with the rest coming from the model's "
+            'own knowledge or reasoning. This is the opposite of "context is barely '
+            'used" — context is being used substantially, but not exclusively.\n\n'
             "## Interpretation\n\n"
-            "The near-zero differences are consistent with the known challenge of this "
-            "eval setup: FinQA and TAT-QA questions require numerical reasoning over "
-            "specific financial tables, while the EDGAR retrieval corpus provides "
-            "general background text. The Faithfulness score (0.22) confirms that "
-            "retrieved context IS being used in the RAG predictions; it simply does "
-            "not contain the precise table cells needed to answer these questions.\n\n"
-            "This is an honest null result. The statistical layer quantifies the "
-            "uncertainty: the 95% CIs on Δ are narrow and centered near zero, "
-            "ruling out practically meaningful effects in either direction.\n"
+            f"With the corrected numeric scoring (Task 1) and a retrieval corpus built "
+            f"from the actual FinQA/TAT-QA source documents (Task 2), `rag` shows a "
+            f"large, statistically significant improvement over `base` on both "
+            f"Exact Match (Δ={em.mean_difference:+.4f}, "
+            f"95% CI [{em.diff_ci_lower:+.4f}, {em.diff_ci_upper:+.4f}], "
+            f"{em.test}, p_adj={em.p_value_adjusted:.4f}) and Token F1 "
+            f"(Δ={f1.mean_difference:+.4f}, "
+            f"95% CI [{f1.diff_ci_lower:+.4f}, {f1.diff_ci_upper:+.4f}], "
+            f"{f1.test}, p_adj={f1.p_value_adjusted:.4f}).\n\n"
+            f"**McNemar power note:** the EM contingency table has {discordant} "
+            f"discordant pairs out of N={em.n} ({rag_only} questions where `rag` is "
+            f"correct and `base` is wrong, vs {base_only} the reverse) — this is not "
+            f"a small-discordant-pairs regime, so the exact test is informative here.\n\n"
+            f"**`base` remains near the performance floor in absolute terms** "
+            f"(EM={base_em.point_estimate:.4f} 95% CI "
+            f"[{base_em.ci_lower:.4f}, {base_em.ci_upper:.4f}], "
+            f"F1={base_f1.point_estimate:.4f} 95% CI "
+            f"[{base_f1.ci_lower:.4f}, {base_f1.ci_upper:.4f}]). This is expected, "
+            "not a measurement artifact: without retrieved context, the model has no "
+            "access to the specific financial-table values FinQA/TAT-QA questions ask "
+            "about, so it cannot answer them correctly regardless of scoring. The "
+            "informative result is the *contrast* — `rag` is clearly off the floor "
+            "and significantly ahead of `base` — not the absolute level of `base`.\n"
         ),
     )
     logger.info("Done. Commit reports/base_vs_rag.md and reports/base_vs_rag_forest.png.")
