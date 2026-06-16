@@ -107,4 +107,9 @@ filterwarnings = [
 
 [tool.coverage.run]
 source = ["src/ragbench"]
-omit = ["src/ragbench/serving/*", "src/ragbench/finetune/*"]
+omit = [
+    "src/ragbench/serving/*",    # FastAPI app — tested via TestClient, not unit coverage
+    "src/ragbench/finetune/*",   # training script — GPU-only, not run in CI
+    "src/ragbench/eval/reporting.py",  # matplotlib + file I/O; no unit tests appropriate
+    "src/ragbench/eval/runner.py",     # MLflow + HF inference; integration-test territory
+]
