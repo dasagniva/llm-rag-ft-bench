@@ -25,6 +25,10 @@ data/index/
 *.gguf
 models/
 
+# Fine-tuning outputs
+checkpoints/
+unsloth_compiled_cache/
+
 # MLflow artifacts (local tracking)
 mlruns/
 mlartifacts/
