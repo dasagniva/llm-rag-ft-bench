@@ -50,7 +50,7 @@ Entries are dated; newest first within each section.
 
 **2026-06-12 — sec-edgar-downloader:** Latest available is 5.1.0, not 5.4 as originally spec'd. Version constraint updated to `>=5.0`. API unchanged — `Downloader(company, email, download_dir)` with `.get(type, ticker, after=, before=)` still works as expected.
 
-**2026-06-12 — PyTorch install:** CUDA 12.4 wheels are at `https://download.pytorch.org/whl/cu124`. Install command requires `--index-strategy unsafe-best-match` because the PyTorch index bundles `tqdm` at an older version that would otherwise shadow PyPI's current tqdm. Standard install command: `uv sync --extra dev --extra-index-url https://download.pytorch.org/whl/cu124 --index-strategy unsafe-best-match` (CPU: replace `cu124` with `cpu`).
+**2026-06-12 — PyTorch install (updated 2026-06-16):** Originally specified cu124 wheels; upgraded to cu126 at Phase 4 (see Phase 4 section). Current index: `https://download.pytorch.org/whl/cu126`. Install command: `uv sync --extra dev --index-strategy unsafe-best-match` (cu126 index is now declared in `pyproject.toml`; CPU: pass `--extra-index-url https://download.pytorch.org/whl/cpu`).
 
 **2026-06-12 — Faithfulness/answer relevance metrics:** Implemented as local lexical/embedding proxies rather than RAGAS or an LLM judge, to avoid API spend. Faithfulness = bigram overlap between answer and retrieved context. Answer relevance = cosine similarity between pre-computed embeddings. Both are zero-cost and fully reproducible. LLM-based judging documented as an upgrade path if the user wants richer evaluation in Phase 5.
 
@@ -147,6 +147,23 @@ has no unsloth dependency — `FtGenerator` uses plain PEFT + bitsandbytes + tra
 **Dependency:** `unsloth>=2024.11` + `trl>=0.11` added as `[project.optional-dependencies.finetune]`
 in `pyproject.toml` (not installed in CI or standard `uv sync --extra dev`).
 **Install command:** `uv sync --extra dev --extra finetune --index-strategy unsafe-best-match`
+
+### PyTorch upgrade: cu124 → cu126 (PyTorch 2.6+)
+
+**Triggered by:** `unsloth 2025.11.1` → `torchao` (recent) → `torch.utils._pytree.register_constant`
+which was added in PyTorch 2.6. The `pytorch-cu124` index caps at PyTorch 2.5.1 → runtime
+`AttributeError` on import.
+
+**Fix (2026-06-16):** switched `[[tool.uv.index]]` from `pytorch-cu124` / `cu124` to
+`pytorch-cu126` / `cu126`; bumped `torch>=2.4` → `torch>=2.6` in `[project.dependencies]`.
+CUDA 12.6 wheels are forward-compatible with the existing CUDA 12.4 hardware driver
+(same CUDA major version 12 — NVIDIA guarantees minor-version compatibility within 12.x).
+
+**CI impact:** CI already overrides the GPU index with `--extra-index-url .../whl/cpu`;
+no CI change needed.
+
+**2026-06-12 original note (now superseded):** `cu124` wheels were specified at Phase 0;
+update that line in the Phase 0 section to read `cu126` going forward.
 
 ---
 
