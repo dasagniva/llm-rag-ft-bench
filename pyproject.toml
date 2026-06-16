@@ -64,6 +64,12 @@ explicit = true
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu124" }]
 
+# xformers (pulled in by unsloth) requires torch at build time but doesn't
+# declare it as a build dependency — provide it explicitly to avoid the
+# "No module named 'torch'" build failure under uv's default isolation.
+[tool.uv.extra-build-dependencies]
+xformers = ["torch"]
+
 [tool.ruff]
 src = ["src"]
 line-length = 100
