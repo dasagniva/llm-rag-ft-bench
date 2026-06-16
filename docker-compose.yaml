@@ -7,5 +7,21 @@ services:
       - qdrant_storage:/qdrant/storage
     restart: unless-stopped
 
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Point the app at the compose-internal Qdrant service
+      - QDRANT_URL=http://qdrant:6333
+    volumes:
+      # LoRA adapter weights (produced by scripts/finetune.py)
+      - ./checkpoints:/app/checkpoints:ro
+      # HuggingFace model cache — avoids re-downloading Qwen3-8B on every `up`
+      - ${HF_HOME:-~/.cache/huggingface}:/root/.cache/huggingface
+    depends_on:
+      - qdrant
+    restart: unless-stopped
+
 volumes:
   qdrant_storage:

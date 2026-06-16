@@ -100,6 +100,10 @@ addopts = "--tb=short -q"
 markers = [
     "integration: marks tests that require Docker, GPU, or network (not run in CI)",
 ]
+filterwarnings = [
+    # Starlette/httpx version mismatch warning inside FastAPI's own package; not our code
+    "ignore::DeprecationWarning:starlette",
+]
 
 [tool.coverage.run]
 source = ["src/ragbench"]

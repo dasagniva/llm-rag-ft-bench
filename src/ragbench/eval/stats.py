@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
+from typing import Any
 
 import numpy as np
 from scipy.stats import binom
@@ -333,7 +334,7 @@ def analyse(
 
     # --- Pairwise tests: compute raw p-values for all (contrast, metric) cells ---
     # Stored as list of dicts before Holm adjustment
-    raw_rows: list[dict] = []
+    raw_rows: list[dict[str, Any]] = []
     for metric in metrics:
         for ca, cb in contrasts:
             if metric not in data.get(ca, {}) or metric not in data.get(cb, {}):
