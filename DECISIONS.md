@@ -193,3 +193,38 @@ closes part of `base`'s gap to `rag` and/or compounds with `rag` (contrasts C2�
 
 **Decision:** user confirmed Phase 4 (2026-06-16). Hardware/spend gate satisfied
 (local 2× RTX 4090, $0 spend). See Phase 4 section above for confirmed details.
+
+---
+
+### Phase 4 evaluation results — 2026-06-16
+
+**Training:** Qwen3-8B, QLoRA r=16/α=32, 3 epochs, 13,876 FinQA-train + TAT-QA-train examples, lora_dropout=0, unsloth.
+
+**Full four-config results (N=300, B=10,000, seed=42):**
+
+| Config | EM | EM 95% CI | Token F1 | F1 95% CI |
+|---|---|---|---|---|
+| base | 0.0067 | [0.0000, 0.0167] | 0.0387 | [0.0265, 0.0523] |
+| rag | 0.1100 | [0.0767, 0.1467] | 0.2037 | [0.1649, 0.2433] |
+| ft | 0.0433 | [0.0233, 0.0667] | 0.1285 | [0.0990, 0.1605] |
+| ft_rag | 0.1900 | [0.1467, 0.2333] | 0.2768 | [0.2313, 0.3230] |
+
+**Faithfulness (RAG configs):** rag 0.5181 [0.4728, 0.5636], ft_rag 0.4318 [0.3774, 0.4869].
+
+**All 5 pre-registered contrasts significant after Holm–Bonferroni (α=0.05):**
+
+| # | Contrast | EM Δ | p_adj | F1 Δ | p_adj |
+|---|---|---|---|---|---|
+| C1 | base vs rag | +0.1033 | <0.0001 | +0.1650 | <0.0001 |
+| C2 | base vs ft | +0.0367 | 0.0034 | +0.0899 | <0.0001 |
+| C3 | base vs ft_rag | +0.1833 | <0.0001 | +0.2382 | <0.0001 |
+| C4 | ft vs ft_rag | +0.1467 | <0.0001 | +0.1483 | <0.0001 |
+| C5 | rag vs ft_rag | +0.0800 | 0.0001 | +0.0731 | <0.0001 |
+
+**Key findings:**
+- Ranking is ft_rag > rag > ft > base on both metrics.
+- QLoRA fine-tuning alone (ft, C2) significantly beats base but falls short of RAG alone (EM 0.043 vs 0.110).
+- ft_rag (C5) significantly beats rag alone (EM Δ=+0.08, F1 Δ=+0.073): fine-tuning adds measurable signal on top of retrieval.
+- The largest single gain remains RAG-enabled retrieval access to source tables, not fine-tuning.
+
+**Full report:** `reports/full_comparison.md`. Forest plots: `reports/forest_C{1..5}.png`.

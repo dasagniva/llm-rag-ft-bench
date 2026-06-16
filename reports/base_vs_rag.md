@@ -34,18 +34,6 @@
 - **Paired permutation test:** sign-flip permutation on per-question F1 differences; B=10,000 permutations.
 - **Multiple-comparison correction:** Holm–Bonferroni across all pre-registered contrasts within each metric (see `EXPERIMENT.md`). With a single pre-registered contrast (C1: base vs rag) at Phase 3, the correction is currently a no-op (1 p-value per metric); it will bind in Phase 4 once C2–C5 (ft, ft_rag contrasts) are added.
 
-## RAG-only diagnostics
+_Note: p-values in this report are Holm-adjusted jointly across all five pre-registered contrasts C1–C5. The C1 result reported here may therefore differ from the Phase 3 report where only C1 was included in the correction._
 
-| Metric | Point est. | 95% CI | n |
-|---|---|---|---|
-| Faithfulness | 0.5181 | [0.4728, 0.5636] | 300 |
-
-Faithfulness (fraction of answer content traceable to retrieved context, 0-1 scale) is **moderate, not high**: roughly half of RAG answer content is grounded in the retrieved chunks, with the rest coming from the model's own knowledge or reasoning. This is the opposite of "context is barely used" — context is being used substantially, but not exclusively.
-
-## Interpretation
-
-With the corrected numeric scoring (Task 1) and a retrieval corpus built from the actual FinQA/TAT-QA source documents (Task 2), `rag` shows a large, statistically significant improvement over `base` on both Exact Match (Δ=+0.1033, 95% CI [+0.0700, +0.1400], mcnemar_exact, p_adj=0.0000) and Token F1 (Δ=+0.1650, 95% CI [+0.1276, +0.2040], permutation, p_adj=0.0000).
-
-**McNemar power note:** the EM contingency table has 31 discordant pairs out of N=300 (31 questions where `rag` is correct and `base` is wrong, vs 0 the reverse) — this is not a small-discordant-pairs regime, so the exact test is informative here.
-
-**`base` remains near the performance floor in absolute terms** (EM=0.0067 95% CI [0.0000, 0.0167], F1=0.0387 95% CI [0.0265, 0.0523]). This is expected, not a measurement artifact: without retrieved context, the model has no access to the specific financial-table values FinQA/TAT-QA questions ask about, so it cannot answer them correctly regardless of scoring. The informative result is the *contrast* — `rag` is clearly off the floor and significantly ahead of `base` — not the absolute level of `base`.
+See `reports/full_comparison.md` for the complete four-configuration analysis.
