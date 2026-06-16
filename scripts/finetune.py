@@ -79,46 +79,86 @@ def _checkpoint_round_trip(
     system_prompt: str,
     sample_question: str,
 ) -> None:
-    """Load the saved adapter with plain PEFT (no unsloth) and run one inference."""
-    import torch
-    from peft import PeftModel
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+    """Load the saved adapter with plain PEFT (no unsloth) and run one inference.
 
-    logger.info("Checkpoint round-trip: loading base + adapter from %s …", adapter_dir)
-    bnb = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_quant_type="nf4",
-    )
-    tok = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-    base = AutoModelForCausalLM.from_pretrained(
-        model_name, quantization_config=bnb, device_map="auto", trust_remote_code=True
-    )
-    loaded = PeftModel.from_pretrained(base, str(adapter_dir))
-    loaded.eval()
+    Runs in a subprocess so unsloth's process-wide monkey-patches to Qwen3Attention
+    (which add apply_qkv) are absent — replicating exactly what FtGenerator does.
+    The training model must be freed before calling this to have enough VRAM.
+    """
+    import json
+    import subprocess
 
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": sample_question},
-    ]
+    logger.info(
+        "Checkpoint round-trip: spawning clean subprocess (plain PEFT, no unsloth) "
+        "to load adapter from %s …",
+        adapter_dir,
+    )
+
+    inline = f"""
+import json, sys, torch
+from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+model_name = {json.dumps(model_name)}
+adapter_dir = {json.dumps(str(adapter_dir))}
+system_prompt = {json.dumps(system_prompt)}
+question = {json.dumps(sample_question[:200])}
+
+bnb = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_quant_type="nf4",
+)
+tok = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+base = AutoModelForCausalLM.from_pretrained(
+    model_name, quantization_config=bnb, device_map="auto", trust_remote_code=True
+)
+loaded = PeftModel.from_pretrained(base, adapter_dir)
+loaded.eval()
+
+messages = [
+    {{"role": "system", "content": system_prompt}},
+    {{"role": "user", "content": question}},
+]
+try:
+    prompt = tok.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True, enable_thinking=False
+    )
+except TypeError:
+    prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+device = next(loaded.parameters()).device
+inputs = tok(prompt, return_tensors="pt").to(device)
+with torch.no_grad():
+    out = loaded.generate(
+        **inputs, max_new_tokens=32, do_sample=False, pad_token_id=tok.eos_token_id
+    )
+new_tokens = out[0][inputs["input_ids"].shape[1]:]
+answer = tok.decode(new_tokens, skip_special_tokens=True).strip()
+print(json.dumps({{"ok": True, "answer": answer}}))
+"""
+
+    result = subprocess.run(
+        [sys.executable, "-c", inline],
+        capture_output=True,
+        text=True,
+        timeout=300,
+    )
+    if result.returncode != 0:
+        tail = result.stderr[-3000:] if result.stderr else "(no stderr)"
+        raise RuntimeError(f"Round-trip subprocess failed (exit {result.returncode}):\n{tail}")
+
+    last_line = result.stdout.strip().split("\n")[-1] if result.stdout.strip() else ""
     try:
-        prompt: str = tok.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True, enable_thinking=False
-        )
-    except TypeError:
-        prompt = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        data = json.loads(last_line)
+        answer = data.get("answer", "(empty)")
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(
+            f"Round-trip subprocess produced unexpected output:\n{result.stdout[-1000:]}"
+        ) from exc
 
-    device = next(loaded.parameters()).device
-    inputs = tok(prompt, return_tensors="pt").to(device)
-    with torch.no_grad():
-        out = loaded.generate(
-            **inputs, max_new_tokens=32, do_sample=False, pad_token_id=tok.eos_token_id
-        )
-    new_tokens = out[0][inputs["input_ids"].shape[1] :]
-    answer = tok.decode(new_tokens, skip_special_tokens=True).strip()
-
-    logger.info("Round-trip OK")
+    logger.info("Round-trip OK (plain PEFT, no unsloth)")
     logger.info("  Q: %s", sample_question[:120])
     logger.info("  A: %s", answer[:120])
 
@@ -323,9 +363,16 @@ def main() -> None:
         mlflow.log_artifact(str(output_dir), artifact_path="adapter")
         logger.info("Adapter saved → %s", output_dir)
 
-        # Canary-only: reload with plain PEFT (no unsloth) and run one inference
-        # to confirm the saved adapter is a complete, loadable checkpoint.
+        # Canary-only: reload with plain PEFT (no unsloth) in a subprocess and run
+        # one inference to confirm the saved adapter is a complete, loadable checkpoint.
         if is_canary:
+            import gc
+
+            # Free the unsloth training model from VRAM before the subprocess loads
+            # the model again with plain PEFT — avoids double-occupancy OOM on 24 GB cards.
+            del trainer, model
+            gc.collect()
+            torch.cuda.empty_cache()
             _checkpoint_round_trip(
                 model_name=model_name,
                 adapter_dir=output_dir,
