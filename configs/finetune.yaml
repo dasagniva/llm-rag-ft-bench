@@ -17,7 +17,7 @@ lora:
     - gate_proj
     - up_proj
     - down_proj
-  lora_dropout: 0.05
+  lora_dropout: 0.0   # must be 0 for unsloth's fused CUDA kernels to activate
   bias: none
 
 training:
