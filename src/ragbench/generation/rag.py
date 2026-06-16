@@ -7,17 +7,30 @@ to enforce the experiment's single-variable-at-a-time constraint.
 
 from __future__ import annotations
 
+from typing import Any
+
 from ragbench.generation.base import BaseGenerator
 from ragbench.generation.config import GenerationConfig
 from ragbench.retrieval.retriever import Retriever
 
 
 class RagGenerator:
-    """Retrieves top-k chunks for each question, then generates via BaseGenerator."""
+    """Retrieves top-k chunks for each question, then generates via a base generator.
 
-    def __init__(self, config: GenerationConfig, retriever: Retriever) -> None:
+    The *_base_generator* parameter allows injecting an FtGenerator for the
+    ft_rag configuration; defaults to BaseGenerator for the rag configuration.
+    """
+
+    def __init__(
+        self,
+        config: GenerationConfig,
+        retriever: Retriever,
+        _base_generator: Any = None,
+    ) -> None:
         self.retriever = retriever
-        self._base = BaseGenerator(config)
+        self._base: BaseGenerator = (
+            _base_generator if _base_generator is not None else BaseGenerator(config)
+        )
 
     def generate(self, question: str) -> tuple[str, str]:
         """Generate an answer with retrieved context.

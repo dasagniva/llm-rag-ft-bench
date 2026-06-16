@@ -84,6 +84,14 @@ def build_base_generator(cfg: dict):  # type: ignore[return]
     return generator.generate, False  # (callable, is_rag)
 
 
+def build_ft_generator(cfg: dict):  # type: ignore[return]
+    from ragbench.generation.ft import FtGenerator
+
+    adapter_path = cfg.get("model", {}).get("adapter_path", "checkpoints/ft_adapter")
+    generator = FtGenerator(_make_gen_config(cfg), adapter_path=adapter_path)
+    return generator.generate, False
+
+
 def build_rag_generator(cfg: dict):  # type: ignore[return]
     from qdrant_client import QdrantClient
 
@@ -106,13 +114,42 @@ def build_rag_generator(cfg: dict):  # type: ignore[return]
     return generator.generate, True  # (callable, is_rag)
 
 
+def build_ft_rag_generator(cfg: dict):  # type: ignore[return]
+    from qdrant_client import QdrantClient
+
+    from ragbench.generation.ft import FtGenerator
+    from ragbench.generation.rag import RagGenerator
+    from ragbench.retrieval.embedder import Embedder
+    from ragbench.retrieval.retriever import Retriever
+
+    retrieval_cfg = cfg.get("retrieval", {})
+    embedder = Embedder(
+        model_name=retrieval_cfg.get("embedding_model", "BAAI/bge-base-en-v1.5"),
+    )
+    client = QdrantClient(url=retrieval_cfg.get("qdrant_url", "http://localhost:6333"))
+    retriever = Retriever(
+        client=client,
+        embedder=embedder,
+        collection=retrieval_cfg.get("collection", "ragbench"),
+        top_k=retrieval_cfg.get("top_k", 5),
+    )
+    adapter_path = cfg.get("model", {}).get("adapter_path", "checkpoints/ft_adapter")
+    ft_gen = FtGenerator(_make_gen_config(cfg), adapter_path=adapter_path)
+    generator = RagGenerator(_make_gen_config(cfg), retriever=retriever, _base_generator=ft_gen)
+    return generator.generate, True
+
+
 def build_generator(cfg: dict):  # type: ignore[return]
     """Return (callable, is_rag) for the config type."""
     config_name = cfg.get("config_name", "base")
-    if config_name in ("base", "ft"):
+    if config_name == "base":
         return build_base_generator(cfg)
-    elif config_name in ("rag", "ft_rag"):
+    elif config_name == "ft":
+        return build_ft_generator(cfg)
+    elif config_name == "rag":
         return build_rag_generator(cfg)
+    elif config_name == "ft_rag":
+        return build_ft_rag_generator(cfg)
     else:
         raise NotImplementedError(f"Unknown config '{config_name}'")
 
@@ -153,6 +190,8 @@ def main() -> None:
         mlflow.log_param("load_in_4bit", model_cfg.get("load_in_4bit", True))
         mlflow.log_param("eval_set", eval_set_path)
         mlflow.log_param("n_questions", len(questions))
+        if config_name in ("ft", "ft_rag"):
+            mlflow.log_param("adapter_path", model_cfg.get("adapter_path", ""))
         if is_rag:
             retrieval_cfg = cfg.get("retrieval", {})
             mlflow.log_param("embedding_model", retrieval_cfg.get("embedding_model", ""))

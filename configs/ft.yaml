@@ -1,0 +1,21 @@
+config_name: ft
+
+model:
+  name: Qwen/Qwen3-8B
+  load_in_4bit: true
+  seed: 42
+  max_new_tokens: 128
+  use_context: false
+  # Path to the QLoRA adapter saved by scripts/finetune.py.
+  # Update this if you trained to a different output_dir.
+  adapter_path: checkpoints/ft_adapter
+
+system_prompt: >-
+  You are a financial analyst. Answer the question concisely and precisely.
+  If the answer is a number, provide only the number with its unit.
+
+eval:
+  eval_set_path: data/eval_manifest.jsonl
+  output_dir: reports
+  mlflow_experiment: ragbench
+  mlflow_run_name: ft

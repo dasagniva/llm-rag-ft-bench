@@ -39,6 +39,12 @@ dev = [
     "types-beautifulsoup4>=4.12",
     "types-tqdm>=4.67",
 ]
+# QLoRA fine-tuning extras (GPU only; not installed in CI).
+# Install: uv sync --extra dev --extra finetune --index-strategy unsafe-best-match
+finetune = [
+    "unsloth>=2024.11",
+    "trl>=0.11",
+]
 
 [build-system]
 requires = ["setuptools>=68"]

@@ -131,6 +131,25 @@ The eval set, decoding, seeds, and pre-registered contrasts (`EXPERIMENT.md` §�
 are unchanged; no new amendment needed for this task (the scoring/corpus changes were
 already recorded as dated amendments under Tasks 1/2).
 
+## Phase 4 — QLoRA fine-tuning — 2026-06-16
+
+### Hardware confirmation [HUMAN gate — satisfied]
+
+**Hardware:** local 2× RTX 4090 (24 GB each), CUDA 12.4. Same box confirmed at Phase 0.
+**Spend:** $0 (local hardware; no GPU rental required).
+**Confirmed by user:** 2026-06-16.
+
+### unsloth [HUMAN choice — user selected Yes]
+
+**Decision:** use `unsloth` for QLoRA training (user's call at Phase 4 per CLAUDE.md).
+**Rationale:** claimed 2× training speedup on Qwen3-class models; the eval pipeline
+has no unsloth dependency — `FtGenerator` uses plain PEFT + bitsandbytes + transformers.
+**Dependency:** `unsloth>=2024.11` + `trl>=0.11` added as `[project.optional-dependencies.finetune]`
+in `pyproject.toml` (not installed in CI or standard `uv sync --extra dev`).
+**Install command:** `uv sync --extra dev --extra finetune --index-strategy unsafe-best-match`
+
+---
+
 ### Task 5 — decision gate: proceed to Phase 4?
 
 **Summary (from Task 3 re-baseline, `reports/base_vs_rag.md`):**
@@ -155,6 +174,5 @@ favour, 0 the reverse).
 well-powered, giving a meaningful baseline against which to test whether fine-tuning
 closes part of `base`'s gap to `rag` and/or compounds with `rag` (contrasts C2–C5).
 
-**Decision:** pending — awaiting user's go/no-go on Phase 4. If proceeding, Phase 4
-still requires `[HUMAN]` confirmation of hardware/spend per `CLAUDE.md` operating
-rule 5 before any GPU fine-tuning work starts.
+**Decision:** user confirmed Phase 4 (2026-06-16). Hardware/spend gate satisfied
+(local 2× RTX 4090, $0 spend). See Phase 4 section above for confirmed details.
