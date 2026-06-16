@@ -25,6 +25,10 @@ data/index/
 *.gguf
 models/
 
+# Fine-tuning outputs
+checkpoints/
+unsloth_compiled_cache/
+
 # MLflow artifacts (local tracking)
 mlruns/
 mlartifacts/
@@ -66,3 +70,4 @@ htmlcov/
 
 # Ad-hoc scripts created during development
 audit.py
+CLAUDE.md
